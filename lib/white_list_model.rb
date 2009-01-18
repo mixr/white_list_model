@@ -99,7 +99,7 @@ module WhiteListModel
         bad_tags = Set.new(options[:bad_tags])
         prot     = Set.new(options[:protocols])
         tags     = Set.new(options[:tags])
-        block = lambda { |node, bad| bad_tags.include?(bad) ? nil : node.to_s.gsub(/</, '&lt;') }
+        block = lambda { |node, bad| bad_tags.include?(bad) ? nil : node.to_s.gsub(/(<#{bad}>)|(<\/#{bad}>)/, '') }
         returning [] do |new_text|
           tokenizer = HTML::Tokenizer.new(text)
           bad       = nil
